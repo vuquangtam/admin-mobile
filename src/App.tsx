@@ -1,14 +1,6 @@
 import React from 'react';
 import { IonApp } from '@ionic/react';
 
-import { Admin, Resource, ListGuesser } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
-
-import authProvider from './services/authProvider';
-import customRoutes from './customRoutes';
-
-import ScannerPage from './pages/ScannerPage/ScannerPage';
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -28,17 +20,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+import AdminApp from './AdminApp';
 
 const App: React.FC = () => (
     <IonApp>
-        <Admin
-            dataProvider={dataProvider}
-            authProvider={authProvider}
-            customRoutes={customRoutes}>
-            <Resource name="users" list={ListGuesser as any} />
-            <Resource name="scanner" list={ScannerPage as any} />
-        </Admin>
+        <AdminApp/>
     </IonApp>
 );
 

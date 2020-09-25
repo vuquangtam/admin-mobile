@@ -7,6 +7,7 @@ import { IonContent, IonButton, IonItem, IonInput } from '@ionic/react';
 const ScannerPage: React.FC = () => {
     const openScanner = async () => {
         const data = await BarcodeScanner.scan();
+        alert('Scanner: ' + data.text);
         console.log(`Barcode data: ${data.text}`);
     };
 
