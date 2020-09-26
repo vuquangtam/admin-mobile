@@ -2,16 +2,13 @@ import React from 'react';
 import { Admin, Resource, ListGuesser } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
 
+import dataProvider from './services/dataProvider';
 import authProvider from './services/authProvider';
 import customRoutes from './customRoutes';
 
 import ScannerPage from './pages/ScannerPage/ScannerPage';
 
 import { CustomerResource } from './resources';
-
-const rootUrl = 'https://thelash.bpsgroup.us/api/ios';
-
-const dataProvider = jsonServerProvider(rootUrl);
 
 const AdminApp: React.FC = () => (
     <Admin
