@@ -17,7 +17,7 @@ export default {
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json.data,
-            total: parseInt(headers.get('x-total-count').split('/').pop(), 10),
+            total: json.total,
         }));
     },
 
@@ -49,7 +49,7 @@ export default {
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json.data,
-            total: parseInt(headers.get('x-total-count').split('/').pop(), 10),
+            total: json.total,
         }));
     },
 
