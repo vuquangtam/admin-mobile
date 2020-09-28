@@ -6,20 +6,32 @@ import { useUpdate } from 'react-admin';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 const ScannerField = ({ source, record = {} }: any) => {
+    const [approve, { loading }] = useUpdate('comments', record.id, record);
+
     const [open, setOpen] = React.useState(false);
+    const [code, setCode] = React.useState('');
 
     const handleClickOpen = () => {
         setOpen(!open);
     }
 
-    const handleClose = (value) => {
+    const handleClose = () => {
         setOpen(false);
     };
+
+    const handleSave = () => {
+        record['card_number'] = code;
+
+        approve();
+
+        handleClose();
+    }
 
     const openScanner = async () => {
         const data = await BarcodeScanner.scan();
         alert('Scanner: ' + data.text);
         console.log(`Barcode data: ${data.text}`);
+        setCode(data.text);
     };
 
     return (
@@ -31,7 +43,7 @@ const ScannerField = ({ source, record = {} }: any) => {
                 <DialogTitle id="simple-dialog-title">Scanner</DialogTitle>
 
                 <DialogContent dividers>
-                    <TextField size="small" label="Card Number" variant="outlined" />
+                    <TextField size="small" label="Card Number" variant="outlined" value={code} onChange={e => setCode(e.target.value)} />
 
                     <IconButton color="primary" component="span" size="small"
                                 style={{ marginLeft: 10, marginTop: 5 }} onClick={openScanner}>
@@ -39,7 +51,7 @@ const ScannerField = ({ source, record = {} }: any) => {
                     </IconButton>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                    <Button autoFocus onClick={handleSave} color="primary">
                         Save changes
                     </Button>
                 </DialogActions>
