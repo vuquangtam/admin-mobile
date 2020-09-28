@@ -1,14 +1,21 @@
 import React from 'react';
 import { useMediaQuery } from '@material-ui/core';
-import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField } from 'react-admin';
+import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter } from 'react-admin';
 
 import { CountField, ScannerField } from '../components';
+
+const FilterView = (props) => (
+    <Filter {...props}>
+        <DateInput label="Expiration" source="card_exp_date" />
+        <DateInput label="Last Visit" source="last_visit" />
+    </Filter>
+);
 
 const ListView = props => {
     const isSmall = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
 
     return (
-        <List {...props}>
+        <List filters={<FilterView />} {...props}>
             <Datagrid>
                 <TextField source="id" />
                 <TextField source="name" />
@@ -17,6 +24,7 @@ const ListView = props => {
                 <DateField source="birthday" />
                 <DateField source="card_issue" />
                 <DateField source="card_exp_date" />
+                <DateField source="last_visit" />
                 <TextField source="card_type" />
                 <CountField source="visit_count" />
                 <ScannerField source="card_number" />
