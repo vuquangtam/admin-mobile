@@ -1,7 +1,29 @@
 import React from 'react';
-import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput } from 'react-admin';
+import { useMediaQuery } from '@material-ui/core';
+import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField } from 'react-admin';
 
-const ListView = ListGuesser;
+import { CountField, ScannerField } from '../components';
+
+const ListView = props => {
+    const isSmall = useMediaQuery((theme: any) => theme.breakpoints.down('sm'));
+
+    return (
+        <List {...props}>
+            <Datagrid>
+                <TextField source="id" />
+                <TextField source="name" />
+                <TextField source="phone_number" />
+                <EmailField source="email" />
+                <DateField source="birthday" />
+                <DateField source="card_issue" />
+                <DateField source="card_exp_date" />
+                <TextField source="card_type" />
+                <CountField source="visit_count" />
+                <ScannerField source="card_number" />
+            </Datagrid>
+        </List>
+    );
+};
 
 const CreateView = props => (
     <Create {...props}>
@@ -9,11 +31,10 @@ const CreateView = props => (
             <DateInput source="birthday" />
             <DateInput source="card_exp_date" />
             <DateInput source="card_issue" />
-            <NumberInput source="card_number" />
+            <TextInput source="card_type" />
             <TextInput source="email" />
             <TextInput source="name" />
             <TextInput source="phone_number" />
-            <NumberInput source="visit_count" />
         </SimpleForm>
     </Create>
 );
@@ -24,11 +45,10 @@ const EditView = props => (
             <DateInput source="birthday" />
             <DateInput source="card_exp_date" />
             <DateInput source="card_issue" />
-            <NumberInput source="card_number" />
+            <TextInput source="card_type" />
             <TextInput source="email" />
             <TextInput source="name" />
             <TextInput source="phone_number" />
-            <NumberInput source="visit_count" />
         </SimpleForm>
     </Edit>
 );
