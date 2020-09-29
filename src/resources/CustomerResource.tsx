@@ -1,6 +1,6 @@
 import React from 'react';
-import { useMediaQuery } from '@material-ui/core';
-import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter } from 'react-admin';
+import { useMediaQuery, Button } from '@material-ui/core';
+import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField } from 'react-admin';
 
 import { CountField, ScannerField } from '../components';
 
@@ -28,6 +28,11 @@ const ListView = props => {
                 <TextField source="card_type" />
                 <CountField source="visit_count" />
                 <ScannerField source="card_number" />
+                <ReferenceField label="Edit" source="id" reference="cus" sortable={false}>
+                    <Button variant="outlined" color="primary" size="small">
+                        Edit
+                    </Button>
+                </ReferenceField>
             </Datagrid>
         </List>
     );

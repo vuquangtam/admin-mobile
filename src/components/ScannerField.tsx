@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonGroup, Button, IconButton, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Button, IconButton, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 import { useUpdate } from 'react-admin';
 
