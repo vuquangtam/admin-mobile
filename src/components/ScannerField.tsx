@@ -6,7 +6,7 @@ import { useUpdate } from 'react-admin';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 const ScannerField = ({ source, record = {} }: any) => {
-    const [approve, { loading }] = useUpdate('comments', record.id, record);
+    const [approve, { loading }] = useUpdate('cus', record.id, record);
 
     const [open, setOpen] = React.useState(false);
     const [code, setCode] = React.useState('');
