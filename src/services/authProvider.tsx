@@ -1,9 +1,11 @@
 export default {
     // called when the user attempts to log in
-    login: ({ username }) => {
-        localStorage.setItem('username', username);
-        // accept all username/password combinations
-        return Promise.resolve();
+    login: ({ username, password }) => {
+        if (username === 'test' && password === 'test123456') {
+            localStorage.setItem('username', username);
+            return Promise.resolve();
+        }
+        return Promise.reject();
     },
     // called when the user clicks on the logout button
     logout: () => {
