@@ -20,7 +20,7 @@ const ScannerField = ({ source, record = {} }: any) => {
     };
 
     const handleSave = () => {
-        record['card_number'] = code;
+        record[source] = code;
 
         approve();
 
@@ -39,6 +39,11 @@ const ScannerField = ({ source, record = {} }: any) => {
             <Button variant="outlined" color="primary" size="small" onClick={handleClickOpen}>
                 Scanner
             </Button>
+
+            <span style={{paddingLeft: 10}}>
+                {record[source]}
+            </span>
+
             <Dialog aria-labelledby="simple-dialog-title" open={open} onClose={handleClose}>
                 <DialogTitle id="simple-dialog-title">Scanner</DialogTitle>
 

@@ -6,6 +6,8 @@ import { CountField, ScannerField } from '../components';
 
 const FilterView = (props) => (
     <Filter {...props}>
+        <TextInput label="Name" source="name" />
+        <TextInput label="Phone" source="phone_number" />
         <DateInput label="Expiration" source="card_exp_date" />
         <DateInput label="Last Visit" source="last_visit" />
     </Filter>
@@ -45,6 +47,7 @@ const CreateView = props => (
             <DateInput source="card_exp_date" />
             <DateInput source="card_issue" />
             <TextInput source="card_type" />
+            <TextInput source="card_number" />
             <TextInput source="email" />
             <TextInput source="name" />
             <TextInput source="phone_number" />
@@ -59,6 +62,7 @@ const EditView = props => (
             <DateInput source="card_exp_date" />
             <DateInput source="card_issue" />
             <TextInput source="card_type" />
+            <TextInput source="card_number" />
             <TextInput source="email" />
             <TextInput source="name" />
             <TextInput source="phone_number" />
