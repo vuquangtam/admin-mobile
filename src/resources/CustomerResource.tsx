@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMediaQuery, Button } from '@material-ui/core';
-import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField } from 'react-admin';
+import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField, email } from 'react-admin';
 
 import { CountField, ScannerField } from '../components';
 
@@ -40,6 +40,8 @@ const ListView = props => {
     );
 };
 
+const validateEmail = email();
+
 const CreateView = props => (
     <Create {...props}>
         <SimpleForm>
@@ -47,10 +49,10 @@ const CreateView = props => (
             <DateInput source="card_exp_date" />
             <DateInput source="card_issue" />
             <TextInput source="card_type" />
-            <TextInput source="card_number" />
-            <TextInput source="email" />
+            <NumberInput source="card_number" />
+            <TextInput source="email" type="email" validate={validateEmail} />
             <TextInput source="name" />
-            <TextInput source="phone_number" />
+            <NumberInput source="phone_number" />
         </SimpleForm>
     </Create>
 );
@@ -62,10 +64,10 @@ const EditView = props => (
             <DateInput source="card_exp_date" />
             <DateInput source="card_issue" />
             <TextInput source="card_type" />
-            <TextInput source="card_number" />
-            <TextInput source="email" />
+            <NumberInput source="card_number" />
+            <TextInput source="email" type="email" validate={validateEmail} />
             <TextInput source="name" />
-            <TextInput source="phone_number" />
+            <NumberInput source="phone_number" />
         </SimpleForm>
     </Edit>
 );
