@@ -63,7 +63,7 @@ const ActionView = (props) => {
                 filterValues,
                 context: 'button',
             })}
-            <CreateButton basePath={basePath} />
+            <CreateButton label="Register" basePath={basePath} />
             <ExportButton
                 disabled={total === 0}
                 resource={resource}
