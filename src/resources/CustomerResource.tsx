@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import { useMediaQuery, Button, Select, FormControl, InputLabel, Divider } from '@material-ui/core';
-import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField, email, TopToolbar, sanitizeListRestProps, CreateButton, ExportButton, useListContext, Responsive, SimpleList } from 'react-admin';
+import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField, email, required, TopToolbar, sanitizeListRestProps, CreateButton, ExportButton, useListContext, Responsive, SimpleList, AutocompleteArrayInput, BooleanInput, FormDataConsumer } from 'react-admin';
 
 import { useLocalStorage } from '../hooks';
 import { CountField, ScannerField } from '../components';
@@ -127,22 +127,39 @@ const ListView = props => {
     );
 };
 
-const validateEmail = email();
-
-const CreateView = props => (
-    <Create {...props}>
-        <SimpleForm>
-            <DateInput source="birthday" />
-            <DateInput source="card_exp_date" />
-            <DateInput source="card_issue" />
-            <TextInput source="card_type" />
-            <NumberInput source="card_number" />
-            <TextInput source="email" type="email" validate={validateEmail} />
-            <TextInput source="name" />
-            <NumberInput source="phone_number" />
-        </SimpleForm>
-    </Create>
-);
+const CreateView = props => {
+    return (
+        <Create {...props}>
+            <SimpleForm validateOnBlur={true}>
+                <BooleanInput source="isRegister" />
+                <DateInput source="birthday" validate={[required()]} />
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.isRegister && (
+                        <DateInput source="card_exp_date" validate={[required()]} />
+                    )}
+                </FormDataConsumer>
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.isRegister && (
+                        <DateInput source="card_issue" validate={[required()]} />
+                    )}
+                </FormDataConsumer>
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.isRegister && (
+                        <TextInput source="card_type" validate={[required()]} />
+                    )}
+                </FormDataConsumer>
+                <FormDataConsumer>
+                    {({ formData, ...rest }) => formData.isRegister && (
+                        <NumberInput source="card_number" validate={[required()]} />
+                    )}
+                </FormDataConsumer>
+                <TextInput source="email" type="email" validate={[email(), required()]} />
+                <TextInput source="name" validate={[required()]} />
+                <NumberInput source="phone_number" validate={[required()]} />
+            </SimpleForm>
+        </Create>
+    );
+};
 
 const EditView = props => (
     <Edit {...props}>
@@ -152,7 +169,7 @@ const EditView = props => (
             <DateInput source="card_issue" />
             <TextInput source="card_type" />
             <NumberInput source="card_number" />
-            <TextInput source="email" type="email" validate={validateEmail} />
+            <TextInput source="email" type="email" validate={[email(), required()]} />
             <TextInput source="name" />
             <NumberInput source="phone_number" />
         </SimpleForm>
