@@ -1,7 +1,7 @@
 export default {
     // called when the user attempts to log in
     login: ({ username, password }) => {
-        if (username === 'test' && password === 'test123456') {
+        if (username === 'admin' && password === 'admin123456') {
             localStorage.setItem('username', username);
             return Promise.resolve();
         }
