@@ -36,13 +36,10 @@ const ScannerField = ({ source, record = {} }: any) => {
 
     return (
         <div>
-            <Button variant="outlined" color="primary" size="small" onClick={handleClickOpen}>
-                Scanner
+            <Button variant="outlined" color="primary" size="small" style={{ marginTop: 5, display: 'block' }} onClick={handleClickOpen}>
+                Scan: {record[source] || 'None'}
             </Button>
 
-            <span style={{paddingLeft: 10}}>
-                {record[source]}
-            </span>
 
             <Dialog aria-labelledby="simple-dialog-title" open={open} onClose={handleClose}>
                 <DialogTitle id="simple-dialog-title">Scanner</DialogTitle>

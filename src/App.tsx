@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonApp } from '@ionic/react';
+import { IonApp, IonContent } from '@ionic/react';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,7 +24,9 @@ import AdminApp from './AdminApp';
 
 const App: React.FC = () => (
     <IonApp>
-        <AdminApp/>
+        <IonContent>
+            <AdminApp/>
+        </IonContent>
     </IonApp>
 );
 
