@@ -1,9 +1,9 @@
 import React, { cloneElement } from 'react';
 import { useMediaQuery, Button, Select, FormControl, InputLabel, Divider } from '@material-ui/core';
-import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField, email, required, TopToolbar, sanitizeListRestProps, CreateButton, ExportButton, useListContext, Responsive, SimpleList, AutocompleteArrayInput, BooleanInput, FormDataConsumer } from 'react-admin';
+import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField, email, required, TopToolbar, sanitizeListRestProps, CreateButton, ExportButton, useListContext, Responsive, SimpleList, AutocompleteArrayInput, BooleanInput, FormDataConsumer, BulkDeleteButton } from 'react-admin';
 
 import { useLocalStorage } from '../hooks';
-import { CountField, ScannerField } from '../components';
+import { CountField, ScannerField, SendSmsButton } from '../components';
 
 const FilterView = (props) => (
     <Filter {...props}>
@@ -75,9 +75,16 @@ const ActionView = (props) => {
     );
 };
 
+const BulkActionView = props => (
+    <React.Fragment>
+        <SendSmsButton {...props} />
+        <BulkDeleteButton {...props} />
+    </React.Fragment>
+);
+
 const ListView = props => {
     return (
-        <List filters={<FilterView />} actions={<ActionView />} {...props}>
+        <List filters={<FilterView />} actions={<ActionView />} bulkActionButtons={<BulkActionView />} {...props}>
             <Responsive
                 small={
                     <Datagrid>
