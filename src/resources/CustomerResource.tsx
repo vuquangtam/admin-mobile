@@ -118,8 +118,11 @@ const ListView = props => {
                         <TextField source="name" />
                         <TextField source="phone_number" />
                         <EmailField source="email" />
+                        <DateField source="birthday" />
                         <DateField source="last_visit" />
                         <TextField source="card_type" />
+                        <TextField source="card_issue" />
+                        <TextField source="card_exp_date" />
                         <CountField source="visit_count" />
                         <ScannerField source="card_number" />
                         <ReferenceField label="Edit" source="id" reference="cus" sortable={false}>
