@@ -2,13 +2,13 @@ const axios = require('axios');
 
 class CustomerService {
     sendSms(customerIds, message) {
-        const url = 'https://thelash.bpsgroup.us/api/ios' + '/api/ios/send_sms';
+        const url = 'https://thelash.bpsgroup.us' + '/api/ios/send_sms';
 
         return axios.post(url, {customerIds, message});
     }
 
     sendMms(customerIds, message, imageUrl) {
-        const url = 'https://thelash.bpsgroup.us/api/ios' + '/api/ios/send_mms';
+        const url = 'https://thelash.bpsgroup.us' + '/api/ios/send_mms';
 
         return axios.post(url, {customerIds, message, images: [imageUrl]});
     }
