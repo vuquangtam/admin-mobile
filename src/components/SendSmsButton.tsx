@@ -1,10 +1,16 @@
 import React, { cloneElement } from 'react';
-import { Button, IconButton, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Select } from '@material-ui/core';
+import { Button, IconButton, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Select, Divider } from '@material-ui/core';
+import { CustomerService } from '../api-services';
+import { useListContext } from 'react-admin';
 
 const SendSmsButton = (props) => {
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [type, setType] = React.useState('sms');
+
+    const { data } = useListContext();
+
+    const selected = props.selectedIds.map(id => data[id]);
 
     const handleClickOpen = () => {
         setOpen(!open);
@@ -15,7 +21,11 @@ const SendSmsButton = (props) => {
     };
 
     const handleSave = () => {
+        const api = type === 'sms' ? CustomerService.sendSms.bind(CustomerService) : CustomerService.sendMms.bind(CustomerService);
 
+        api(props.selectedIds, message)
+            .catch(() => alert('Cannot send message'))
+            .finally(() => setOpen(!open));
     }
 
     return (
@@ -24,17 +34,29 @@ const SendSmsButton = (props) => {
                 Send SMS/MMS
             </Button>
 
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open}
+                    onClose={handleClose}
+                    fullWidth={true}
+                    maxWidth = {'md'}>
                 <DialogTitle>Send SMS/MMS</DialogTitle>
 
                 <DialogContent dividers>
                     <form noValidate autoComplete="off">
+                        Send Message to: {selected.map((row: any) => row.name).join(', ')}
+
+                        <Divider style={{marginTop: 25, marginBottom: 25}} />
+
                         <Select native label="Type" onChange={e => setType(e.target.value as any)} value={type} style={{display: 'block', width: '100%'}}>
                             <option value="sms">SMS</option>
                             <option value="mms">MMS</option>
                         </Select>
 
-                        <TextField multiline label="Message" value={message} onChange={e => setMessage(e.target.value)} style={{display: 'block', width: '100%'}} />
+                        <TextField multiline fullWidth={true}
+                                   label="Message (Maximum 160 characters)"
+                                   value={message}
+                                   onChange={e => setMessage(e.target.value)}
+                                   style={{display: 'block', width: '100%'}}
+                                   inputProps={{ maxLength: 160 }}/>
                     </form>
                 </DialogContent>
 
