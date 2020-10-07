@@ -4,9 +4,12 @@ import { CustomerService } from '../api-services';
 import { useListContext } from 'react-admin';
 
 const SendSmsButton = (props) => {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [message, setMessage] = React.useState('');
     const [type, setType] = React.useState('sms');
+    const [file, setFile] = React.useState(null);
+
+    console.log(file);
 
     const { data } = useListContext();
 
@@ -21,11 +24,17 @@ const SendSmsButton = (props) => {
     };
 
     const handleSave = () => {
-        const api = type === 'sms' ? CustomerService.sendSms.bind(CustomerService) : CustomerService.sendMms.bind(CustomerService);
+        if (type === 'sms') {
+            CustomerService.sendSms(props.selectedIds, message)
+                           .catch(() => alert('Cannot send message'))
+                           .finally(() => setOpen(!open));
+        } else {
+            CustomerService.uploadFile('mms', file).then(res => {
+                const url = res.data;
 
-        api(props.selectedIds, message)
-            .catch(() => alert('Cannot send message'))
-            .finally(() => setOpen(!open));
+                CustomerService.sendMms(props.selectedIds, message, url);
+            }).catch(() => alert('Cannot send message')).finally(() => setOpen(!open));
+        }
     }
 
     return (
@@ -51,6 +60,21 @@ const SendSmsButton = (props) => {
                             <option value="mms">MMS</option>
                         </Select>
 
+                        {type === 'mms' && (
+                            <Button
+                                variant="contained"
+                                component="label"
+                                style={{marginTop: 10}}
+                            >
+                                Upload File
+                                <input
+                                    type="file"
+                                    style={{ display: "none" }}
+                                    onChange={e => setFile(e.target.files[0])}
+                                />
+                            </Button>
+                        )}
+
                         <TextField multiline fullWidth={true}
                                    label="Message (Maximum 160 characters)"
                                    value={message}
@@ -61,7 +85,7 @@ const SendSmsButton = (props) => {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button autoFocus onClick={handleSave} color="primary" disabled={!message}>
+                    <Button autoFocus onClick={handleSave} color="primary" disabled={!message || (type === 'mms' && !file)}>
                         Save changes
                     </Button>
                 </DialogActions>

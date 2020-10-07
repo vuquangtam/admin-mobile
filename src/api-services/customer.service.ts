@@ -1,32 +1,30 @@
-class CustomerService {
-    async postData(url = '', data = {}) {
-        // Default options are marked with *
-        const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
-    }
+const axios = require('axios');
 
-    sendSms(params: {customerIds, message}) {
+class CustomerService {
+    sendSms(customerIds, message) {
         const url = 'https://thelash.bpsgroup.us/api/ios' + '/api/ios/send_sms';
 
-        return this.postData(url, params);
+        return axios.post(url, {customerIds, message});
     }
 
-    sendMms(params: {customerIds, message}) {
+    sendMms(customerIds, message, imageUrl) {
         const url = 'https://thelash.bpsgroup.us/api/ios' + '/api/ios/send_mms';
 
-        return this.postData(url, params);
+        return axios.post(url, {customerIds, message, images: [imageUrl]});
+    }
+
+    uploadFile(type, file) {
+        const url = 'https://thelash.bpsgroup.us/api/admin' + '/upload-image';
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("data", JSON.stringify({type: type}));
+
+        return axios.post(url, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }
 
