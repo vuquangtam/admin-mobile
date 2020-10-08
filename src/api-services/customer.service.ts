@@ -4,13 +4,33 @@ class CustomerService {
     sendSms(customerIds, message) {
         const url = 'https://thelash.bpsgroup.us' + '/api/ios/send_sms';
 
-        return axios.post(url, {customerIds, message});
+        return axios.post(url, {customerIds, message})
+            .then(res => res.data)
+            .then(res => {
+                console.log(res);
+
+                if (res.code) {
+                    throw res.error;
+                }
+
+                return res;
+            });
     }
 
     sendMms(customerIds, message, imageUrl) {
         const url = 'https://thelash.bpsgroup.us' + '/api/ios/send_mms';
 
-        return axios.post(url, {customerIds, message, images: [imageUrl]});
+        return axios.post(url, {customerIds, message, images: [imageUrl]})
+            .then(res => res.data)
+            .then(res => {
+                console.log(res);
+
+                if (res.code) {
+                    throw res.error;
+                }
+
+                return res;
+            });
     }
 
     uploadFile(type, file) {

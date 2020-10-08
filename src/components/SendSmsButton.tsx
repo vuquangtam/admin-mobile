@@ -4,18 +4,19 @@ import { CustomerService } from '../api-services';
 import { useListContext } from 'react-admin';
 
 const SendSmsButton = (props) => {
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [type, setType] = React.useState('sms');
     const [file, setFile] = React.useState(null);
-
-    console.log(file);
 
     const { data } = useListContext();
 
     const selected = props.selectedIds.map(id => data[id]);
 
     const handleClickOpen = () => {
+        setMessage('');
+        setType('sms');
+        setFile(null);
         setOpen(!open);
     }
 
