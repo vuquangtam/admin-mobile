@@ -3,7 +3,7 @@ import { useMediaQuery, Button, Select, FormControl, InputLabel, Divider } from 
 import { Resource, ListGuesser, SimpleForm, TextInput, Create, Edit, DateInput, NumberInput, List, Datagrid, TextField, EmailField, DateField, Filter, ReferenceField, email, required, TopToolbar, sanitizeListRestProps, CreateButton, ExportButton, useListContext, Responsive, SimpleList, AutocompleteArrayInput, BooleanInput, FormDataConsumer, BulkDeleteButton } from 'react-admin';
 
 import { useLocalStorage } from '../hooks';
-import { CountField, ScannerField, SendSmsButton } from '../components';
+import { CountField, ScannerField, SendSmsButton, AlertHiddenButton } from '../components';
 
 const FilterView = (props) => (
     <Filter {...props}>
@@ -77,6 +77,7 @@ const ActionView = (props) => {
 
 const BulkActionView = props => (
     <React.Fragment>
+        <AlertHiddenButton />
         <SendSmsButton {...props} />
         <BulkDeleteButton {...props} />
     </React.Fragment>

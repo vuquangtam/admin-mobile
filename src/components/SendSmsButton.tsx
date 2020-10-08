@@ -27,14 +27,14 @@ const SendSmsButton = (props) => {
     const handleSave = () => {
         if (type === 'sms') {
             CustomerService.sendSms(props.selectedIds, message)
-                           .catch(() => alert('Cannot send message'))
+                           .catch((err) => alert(err || 'Cannot send message'))
                            .finally(() => setOpen(!open));
         } else {
             CustomerService.uploadFile('mms', file).then(res => {
                 const url = res.data;
 
                 CustomerService.sendMms(props.selectedIds, message, url);
-            }).catch(() => alert('Cannot send message')).finally(() => setOpen(!open));
+            }).catch((err) => alert(err || 'Cannot send message')).finally(() => setOpen(!open));
         }
     }
 
