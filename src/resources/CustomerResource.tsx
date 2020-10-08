@@ -85,7 +85,7 @@ const BulkActionView = props => (
 
 const ListView = props => {
     return (
-        <List filters={<FilterView />} actions={<ActionView />} bulkActionButtons={<BulkActionView />} {...props}>
+        <List filters={<FilterView />} actions={<ActionView />} bulkActionButtons={<BulkActionView />} title="Membership Card Managerment" {...props}>
             <Responsive
                 small={
                     <Datagrid>
@@ -140,7 +140,7 @@ const ListView = props => {
 
 const CreateView = props => {
     return (
-        <Create {...props}>
+        <Create title="Create Customer" {...props}>
             <SimpleForm validateOnBlur={true}>
                 <BooleanInput source="isRegister" />
                 <DateInput source="birthday" validate={[required()]} />
@@ -173,7 +173,7 @@ const CreateView = props => {
 };
 
 const EditView = props => (
-    <Edit {...props}>
+    <Edit title="Edit Customer" {...props}>
         <SimpleForm>
             <DateInput source="birthday" />
             <DateInput source="card_exp_date" />
